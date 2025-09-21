@@ -89,4 +89,22 @@ public class ProdutoService {
         produto.setAtivo(true);
         repository.save(produto);
     }
+
+    public List<ProdutoResponse> searchByName(String nome) {
+        return repository.findByNomeContainingIgnoreCase(nome).stream()
+                .map(ProdutoMapper::toResponse)
+                .toList();
+    }
+
+    public List<ProdutoResponse> searchByNameInativos(String nome) {
+        return repository.findByNomeContainingIgnoreCaseAndAtivoFalse(nome).stream()
+                .map(ProdutoMapper::toResponse)
+                .toList();
+    }
+
+    public List<ProdutoResponse> searchByNameAtivos(String nome) {
+        return repository.findByNomeContainingIgnoreCaseAndAtivoTrue(nome).stream()
+                .map(ProdutoMapper::toResponse)
+                .toList();
+    }
 }

@@ -66,4 +66,19 @@ public class ProdutoController {
         service.activate(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping("/busca")
+    public ResponseEntity<List<ProdutoResponse>> searchByName(@RequestParam String nome) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.searchByName(nome));
+    }
+
+    @GetMapping("/busca/ativos")
+    public ResponseEntity<List<ProdutoResponse>> searchByNameAtivos(@RequestParam String nome) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.searchByNameAtivos(nome));
+    }
+
+    @GetMapping("/busca/inativos")
+    public ResponseEntity<List<ProdutoResponse>> searchByNameInativos(@RequestParam String nome) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.searchByNameInativos(nome));
+    }
 }
