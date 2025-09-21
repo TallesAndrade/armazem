@@ -24,6 +24,6 @@ public record ProdutoRequest(
         @FutureOrPresent(message = "A data de validade não pode estar no passado")
         LocalDate dataValidade,
 
-        @AssertTrue(message = "O campo 'ehPesavel' deve ser verdadeiro ou falso")
+        @NotNull(message = "O campo 'ehPesavel' deve ser verdadeiro ou falso")
         boolean ehPesavel
 ) {}
