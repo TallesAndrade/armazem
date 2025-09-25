@@ -12,14 +12,18 @@ import java.util.List;
 @Service
 public class ProdutoService {
     private final ProdutoRepository repository;
+    private final EstoqueService estoqueService;
 
-    public ProdutoService(ProdutoRepository repository) {
+    public ProdutoService(ProdutoRepository repository,EstoqueService estoqueService) {
         this.repository = repository;
+        this.estoqueService = estoqueService;
     }
 
     public ProdutoResponse save(ProdutoRequest request) {
         Produto produto = ProdutoMapper.toEntity(request);
-        return ProdutoMapper.toResponse(repository.save(produto));
+        Produto produtoSave = repository.save(produto);
+        estoqueService.criarEstoque(produtoSave);
+        return ProdutoMapper.toResponse(produtoSave);
     }
 
     public List<ProdutoResponse> findAll() {
@@ -74,6 +78,7 @@ public class ProdutoService {
             throw new RuntimeException();
         }
 
+        estoqueService.desativarEstoque(id);
         produto.setAtivo(false);
         repository.save(produto);
     }
@@ -87,6 +92,7 @@ public class ProdutoService {
         }
 
         produto.setAtivo(true);
+        estoqueService.reativarEstoque(id);
         repository.save(produto);
     }
 
