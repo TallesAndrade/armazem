@@ -30,5 +30,6 @@ public class Estoque {
 
     private Double quantidadeMinima;
 
+    private boolean ativo = true;
 
 }
